@@ -10,11 +10,9 @@ export function render(vnode, container) {
 }
 
 function patch(vnode, container) {
-
-    //TODO: 判断vnode是不是一个element
-    //是elelment那么就该处理element
-    //如何区分是element还是component类型
-    console.log(vnode.type);
+    // SHapeFlags
+    // vnode ->flag
+    //
     if (typeof vnode.type === 'string') {
         mountElement(vnode, container)
     } else if (isObject(vnode.type)) {
@@ -23,7 +21,7 @@ function patch(vnode, container) {
 }
 function mountElement(vnode: any, container: any) {
     const el = document.createElement(vnode.type)
-
+    vnode.el = el
     const {children,props} = vnode
     // string , array
     if(typeof children ==='string'){
@@ -51,18 +49,20 @@ function processComponent(vnode, container) {
     mountComponent(vnode, container)
 
 }
-function mountComponent(vnode, container) {
-    const instance = createComponentInstance(vnode)
+function mountComponent(initialVnode, container) {
+    const instance = createComponentInstance(initialVnode)
 
     setupComponent(instance)
-    setupRenderEffect(instance, container)
+    setupRenderEffect(instance,initialVnode, container)
 }
 
-function setupRenderEffect(instance: any, container) {
+function setupRenderEffect(instance: any, initialVnode,container) {
     const subTree = instance.render.call(instance.proxy)
     //vnode->path
     //vode->element->mountelement
 
     patch(subTree, container)
+    //element 都mount完成
+    initialVnode.el = subTree.el
 }
 
