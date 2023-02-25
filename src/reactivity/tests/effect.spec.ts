@@ -33,7 +33,6 @@ describe('effect', () => {
         let run: any;
         const scheduler = jest.fn(() => {
             run = runnner;
-            console.log(1112)
         })
         const obj = reactive({ foo: 1 })
         const runnner = effect(() => {

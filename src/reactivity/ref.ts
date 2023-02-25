@@ -23,7 +23,6 @@ class RefImpl {
     }
     set value(newValue) {
         //一定是先修改了 才触发依赖
-        console.log(this._rawValue,newValue)
         if (hasChanged(this._rawValue, newValue)) {
             this._rawValue = newValue
             this._value = convert(newValue)
