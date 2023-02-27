@@ -1,7 +1,8 @@
 import { hasOwn } from "../reactivity/shared/index"
 
 const publciPropertiesMap={
-    $el:(i)=>i.vnode.el
+    $el:(i)=>i.vnode.el,
+    $slots:(i)=>i.slots
 }
 export const PublicInstanceHandlers ={
     get({_:instance},key){
@@ -17,7 +18,7 @@ export const PublicInstanceHandlers ={
         }
         const publicGetter = publciPropertiesMap[key]
         if(publicGetter){
-            return publicGetter
+            return publicGetter(instance)
         }
 
         //setup

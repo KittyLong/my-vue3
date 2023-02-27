@@ -6,7 +6,6 @@ export function render(vnode, container) {
 
     // patch
     //
-
     patch(vnode, container)
 }
 
@@ -36,7 +35,7 @@ function mountElement(vnode: any, container: any) {
     const eventTxt = /^on[A-Z]/
     for (const key in props) {
         const val = props[key]
-        const isOn = (key:string) => /^on[A-Z]/.test(key)
+        const isOn = (key:string) => eventTxt.test(key)
         if (isOn(key)) {
             const event = key.slice(2).toLowerCase();
             el.addEventListener(event, val)
