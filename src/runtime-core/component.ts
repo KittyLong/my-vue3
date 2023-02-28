@@ -3,13 +3,17 @@ import { initProps } from "./componentProps"
 import { shallowReadonly } from "../reactivity/reactive"
 import { emit } from "./componentEmit"
 import { initSlots } from "./componentSlots"
-export function createComponentInstance(vnode) {
+export function createComponentInstance(vnode,parent) {
+    console.log('createCOmponent',parent);
+    
     const component = {
         vnode,
         type: vnode.type,
         setupState:{},
         props:{},
         slots:{},
+        provides:parent?parent.provides:{},
+        parent,
         emit:()=>{}
     }
     component.emit = emit.bind(null,component) as any
@@ -34,7 +38,10 @@ function setupStatefulComponent(instance: any) {
     const { setup } = Component
 
     if (setup) {
+        //getCurrentInstance只能在setup和生命周期函数中调用
+        setCurrentInstance(instance)
         const setupResult = setup(shallowReadonly(instance.props),{emit:instance.emit})
+        setCurrentInstance(null)
         handleSetupResult(instance, setupResult)
     }
 }
@@ -53,4 +60,11 @@ function finishComponentSetup(instance: any) {
     // if(Component.render){
     instance.render = Component.render
     // }
+}
+let currentInstance = null
+export function getCurrentInstance(){
+  return currentInstance
+}
+export function setCurrentInstance(instance){
+    currentInstance = instance
 }

@@ -1,4 +1,4 @@
-import { h } from "../lib/guide-mini-vue.esm.js";
+import { h } from "../../lib/guide-mini-vue.esm.js";
 export const Foo = {
     // 1.setup接收props
     // 2.this.xx可以直接访问到props中的属性

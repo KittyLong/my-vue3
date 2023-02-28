@@ -1,4 +1,4 @@
-import { h } from "../lib/guide-mini-vue.esm.js"
+import { createTextVNode, h } from "../../lib/guide-mini-vue.esm.js"
 import { Foo } from "./Foo.js"
 import { FooSlots } from "./FooSlots.js"
 window.self = null
@@ -46,10 +46,18 @@ export const App = {
         //     ,
         //     // footer:({age})=> h('p', {}, age)
         // })
+        // const foo = h(FooSlots, {}, {
+        //     header: ({age}) =>
+        //         //TODO 这里目前children用字符转 暂时不只支持纯数字 shapeFlags缺少类型 后期补充
+        //         [h('p', {}, 'foott' + age)]
+        //     ,
+        //     // footer:({age})=> h('p', {}, age)
+        // })
+        // text节点处理
         const foo = h(FooSlots, {}, {
             header: ({age}) =>
                 //TODO 这里目前children用字符转 暂时不只支持纯数字 shapeFlags缺少类型 后期补充
-                h('p', {}, 'foott' + age)
+                [h('p', {}, 'foott' + age),createTextVNode('你好呀')]
             ,
             // footer:({age})=> h('p', {}, age)
         })
