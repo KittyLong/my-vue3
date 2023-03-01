@@ -5,7 +5,6 @@ export const Foo = {
     // 3.props的属性是readonly
     setup(props,{emit}) {
         const emitAdd = ()=>{
-            console.log('emitAdd');
             emit('add',1,2)
             // add-foo
             emit('add-foo',1,2)

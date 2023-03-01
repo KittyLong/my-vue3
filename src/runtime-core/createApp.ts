@@ -1,7 +1,8 @@
-import { render } from "./render";
+import { createRenderer } from "./renderer";
 import { createVNode } from "./vnode"
 
-export function createApp(rootComponent) {
+export function craeteAppApI(render){
+  return  function createApp(rootComponent) {
     return {
         mount(rootContainer) {
             // 先转换成vnode
@@ -14,3 +15,5 @@ export function createApp(rootComponent) {
         }
     }
 }
+}
+

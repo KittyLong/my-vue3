@@ -3,10 +3,11 @@ import { initProps } from "./componentProps"
 import { shallowReadonly } from "../reactivity/reactive"
 import { emit } from "./componentEmit"
 import { initSlots } from "./componentSlots"
+import { proxyRefs } from "../reactivity"
 export function createComponentInstance(vnode,parent) {
-    console.log('createCOmponent',parent);
     
     const component = {
+        isMounted:false,
         vnode,
         type: vnode.type,
         setupState:{},
@@ -49,7 +50,7 @@ function handleSetupResult(instance, setupResult: any) {
     //function object
     // TODO funciton
     if (typeof setupResult === 'object') {
-        instance.setupState = setupResult
+        instance.setupState = proxyRefs(setupResult)
     }
     finishComponentSetup(instance)
 }

@@ -1,6 +1,6 @@
 import { mutableHandlers, readonlyHandlers, shallowReadonlyHandlers } from "./baseHandlers"
 import { track, trigger } from "./effect"
-import { isObject } from "./shared/index"
+import { isObject } from "../shared/index"
 
 export const enum ReactiveFlags {
     IS_REACTIVE = '__v_isReactive',

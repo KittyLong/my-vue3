@@ -1,4 +1,4 @@
-import { ShapeFlags } from "../reactivity/shared/ShapeFlags"
+import { ShapeFlags } from "../shared/ShapeFlags"
 
 export function initSlots(instance, children) {
     // slots 处理判断

@@ -1,4 +1,4 @@
-import { ShapeFlags } from "../reactivity/shared/ShapeFlags"
+import { ShapeFlags } from "../shared/ShapeFlags"
 
 export const Fragment = Symbol('Fragment')
 export const Text = Symbol('Text')

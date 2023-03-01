@@ -1,2 +1,7 @@
 //  mini-vue的出口
-export * from './runtime-core/index';
+export * from "./reactivity"
+
+export * from './runtime-dom';
+
+export * from './runtime-core'
+

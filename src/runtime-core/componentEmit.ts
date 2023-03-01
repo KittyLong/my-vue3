@@ -1,4 +1,4 @@
-import { camelize, toHandlerKey } from "../reactivity/shared/index"
+import { camelize, toHandlerKey } from "../shared/index"
 
 export function emit(instance,event,...args){
     //instance.props里面是否有emit event
