@@ -1,7 +1,7 @@
 import { ReactiveEffect } from "./effect";
 import { ref } from "./ref";
 
-class computedRefIml{
+export class ComputedRefIml{
     private _getter :any;
     private _dirty:boolean=true;
     private _value:any;
@@ -19,13 +19,13 @@ class computedRefIml{
         // get value > dirty true
         // 当依赖的响应式对象的值发生改变的时候
         if(this._dirty){
-            this._dirty = false
             this._value = this._effct.run()
+            this._dirty = false
         }
         return this._value
     }
 }
 
 export function computed(getter){ 
-  return new computedRefIml(getter)
+  return new ComputedRefIml(getter)
 }

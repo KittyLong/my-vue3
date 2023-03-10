@@ -10,6 +10,7 @@ export const App = {
     render() {
         window.self = this
         const app = h('div', {}, 'Apptest')
+        return h('div',{id:'root',class:['red']})
         // return h('div', {
         //     id: 'root',
         //     class: ['red', 'hard'],
@@ -48,7 +49,6 @@ export const App = {
         // })
         // const foo = h(FooSlots, {}, {
         //     header: ({age}) =>
-        //         //TODO 这里目前children用字符转 暂时不只支持纯数字 shapeFlags缺少类型 后期补充
         //         [h('p', {}, 'foott' + age)]
         //     ,
         //     // footer:({age})=> h('p', {}, age)

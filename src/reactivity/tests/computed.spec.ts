@@ -26,7 +26,7 @@ describe('computed',()=>{
         //should not compute until needed
         value.foo = 2
         expect((getter)).toHaveBeenCalledTimes(1)
-
+        console.log(value.foo) 
         expect(cValue.value).toBe(2)
         expect(getter).toHaveBeenCalledTimes(2)
 

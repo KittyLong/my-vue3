@@ -1,7 +1,6 @@
-import { createRenderer } from "./renderer";
 import { createVNode } from "./vnode"
 
-export function craeteAppApI(render){
+export function createAppAPI(render){
   return  function createApp(rootComponent) {
     return {
         mount(rootContainer) {
