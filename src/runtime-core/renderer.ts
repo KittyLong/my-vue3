@@ -4,6 +4,7 @@ import { ShapeFlags } from "../shared/ShapeFlags";
 import { createComponentInstance, setupComponent } from "./component"
 import { shouldUpdateComponent } from "./componentUpdateUtils";
 import { createAppAPI } from "./createApp";
+import { queueJobs } from "./scheduler";
 
 import { Fragment, Text } from "./vnode";
 export function createRenderer(options) {
@@ -293,7 +294,7 @@ export function createRenderer(options) {
         instance.update = effect(() => {
             debugger
             if (!instance.isMounted) {
-                const subTree = instance.subTree = instance.render.call(instance.proxy)
+                const subTree = instance.subTree = instance.render.call(instance.proxy,instance.proxy)
                 //vnode->path
                 //vode->element->mountelement
 
@@ -307,7 +308,7 @@ export function createRenderer(options) {
                     next.el = vnode.el
                     updateComponentPreRender(instance,next)
                 }
-                const subTree = instance.render.call(instance.proxy)
+                const subTree = instance.render.call(instance.proxy,instance.proxy)
                 const preSubTree = instance.subTree
                 instance.subTree = subTree
                 // 初始化时subtree被赋值 这里的substree没有
@@ -315,7 +316,11 @@ export function createRenderer(options) {
                 patch(preSubTree, subTree, container, instance, anchor)
             }
 
-        })
+        },{scheduler:()=>{ 
+            // 同步任务中很多值变化 控制当所有值变化完再更新视图
+            // 即把更新视图任务加入微任务即可
+            queueJobs(instance.update)
+        }})
 
     }
     return {
@@ -329,8 +334,18 @@ function updateComponentPreRender(instance, nextVNode) {
     instance.props = nextVNode.props;
   }
 function getSequence(arr) {
-    const p = arr.slice();
-    const result = [0];
+    /**
+     * 二分+贪心+回溯
+     *  例子: 2,4,3,5,1
+     * 
+     * 往后找 arrI 如果比result最后一个大 那就直接加入result 递增子序列
+     * 如果小于 就找result中大于arrI的最小的那个值然后替换 二分+贪心
+     * 同时用p[i] 记录在最长递增子序列中 arr中第i个元素在递增序列中的前面一个元素 这样就知道在最长递增子序列中每个元素的前一个是什么
+     * 用于回溯出正确的最长递增子序列
+     * 如果没有回溯 结果会是 4,2,3 回溯后是0,2,3
+     */
+    const p = arr.slice(); //前缀节点存储 前缀节点用于回溯 用其它的也行 如 p= new Array(arr.length).fill(-1)
+    const result = [0]; //最长递增子序列的index集合
     let i, j, u, v, c;
     const len = arr.length;
     for (i = 0; i < len; i++) {

@@ -39,3 +39,4 @@ const renderer: any = createRenderer({
 export function createApp(...args) {
     return renderer.createApp(...args)
 }
+export * from "../runtime-core";
