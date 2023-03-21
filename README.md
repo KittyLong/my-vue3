@@ -1,4 +1,4 @@
-# mini-vue
+# my-vue3
 ## 环境配置
 1.yarn add typescript --dev
 2.npx tsc --init
